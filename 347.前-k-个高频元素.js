@@ -16,8 +16,6 @@ var topKFrequent = function (nums, k) {
     m.set(item, m.has(item) ? m.get(item) + 1 : 1);
   });
 
-  console.log("m", m);
-
   const h = new MiniHeap();
   m.forEach((value, key) => {
     h.insert({
