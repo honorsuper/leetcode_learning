@@ -10,26 +10,28 @@
  * @return {boolean}
  */
 var isValid = function (s) {
+  // 如果长度是奇数，直接返回
   if (s.length % 2 !== 0) return false;
-  const result = [];
+  const stack = [];
+  const m = new Map();
+  m.set("(", ")");
+  m.set("{", "}");
+  m.set("[", "]");
+
   for (let i = 0; i < s.length; i++) {
-    const current = s[i];
-    if (current === "(" || current === "{" || current === "[") {
-      result.push(current);
+    const item = s[i];
+    if (m.has(item)) {
+      // 此时为左括号
+      stack.push(item);
     } else {
-      const temp = result[result.length - 1];
-      if (
-        (current === ")" && temp === "(") ||
-        (current === "}" && temp === "{") ||
-        (current === "]" && temp === "[")
-      ) {
-        //出栈
-        result.pop();
+      const t = stack[stack.length - 1];
+      if (item === m.get(t)) {
+        stack.pop();
       } else {
         return false;
       }
     }
   }
-  return result.length === 0;
+  return stack.length === 0;
 };
 // @lc code=end
